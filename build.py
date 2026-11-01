@@ -1,6 +1,6 @@
 """texasfoldinggrill.com build. Run: python3 build.py
-To switch on visit counting, replace GC_CODE_texasfoldinggrill in GOATCOUNTER below with the real GoatCounter code, then rebuild."""
-GOATCOUNTER = "https://GC_CODE_texasfoldinggrill.goatcounter.com/count"
+To switch on visit counting, replace texasfoldinggrill in GOATCOUNTER below with the real GoatCounter code, then rebuild."""
+GOATCOUNTER = "https://texasfoldinggrill.goatcounter.com/count"
 DOMAIN = "https://texasfoldinggrill.com"
 UTM_SOURCE = "texasfoldinggrill"
 SITE_NAME = "Texas Folding Grill"
