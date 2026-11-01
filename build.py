@@ -3,22 +3,22 @@ To switch on visit counting, replace texasfoldinggrill in GOATCOUNTER below with
 GOATCOUNTER = "https://texasfoldinggrill.goatcounter.com/count"
 DOMAIN = "https://texasfoldinggrill.com"
 UTM_SOURCE = "texasfoldinggrill"
-SITE_NAME = "Texas Folding Grill"
+SITE_NAME = "Texas Flat Pack Grill"
 LASTMOD = "2026-10-31"
 THEME_COLOR = "#2b1d16"
 HOME_IMG = "full01"
-HOME_TITLE = "Texas Folding Grill: Texas-Style BBQ on a Small Folding Charcoal Grill"
-HOME_DESC = "Texas BBQ cooking adapted to a small folding charcoal grill: brisket, sausage and ribs approaches, fire management, tailgates, deer camp and river trips."
-BRAND_HTML = '<span class="star" aria-hidden="true">★</span><span class="wm">TEXAS <em>Folding</em> GRILL</span>'
-FOOTER_BLURB = "<b>Texas Folding Grill</b> covers Texas-style cooking on a small, folding charcoal grill: post oak and mesquite, beef and sausage, tailgates, deer leases and river weekends. It's published by Slot Grill, which builds its grills in Buna, Texas."
+HOME_TITLE = "Texas Flat Pack Grill: Texas-Style BBQ on a Small Flat Pack Charcoal Grill"
+HOME_DESC = "Texas BBQ cooking adapted to a small flat pack charcoal grill: brisket, sausage and ribs approaches, fire management, tailgates, deer camp and river trips."
+BRAND_HTML = '<span class="star" aria-hidden="true">★</span><span class="wm">TEXAS <em>Flat Pack</em> GRILL</span>'
+FOOTER_BLURB = "<b>Texas Flat Pack Grill</b> covers Texas-style cooking on a small, flat pack charcoal grill: post oak and mesquite, beef and sausage, tailgates, deer leases and river weekends. It's published by Slot Grill, which builds its grills in Buna, Texas."
 NOTE = "Product specs and prices are from SlotGrill.com. Cook outdoors only, on stable, non-combustible ground, and check county burn bans before you light."
 CATS = {
- "fire": ("texas-fire-management", "Fire &amp; Wood", "Post oak, mesquite, hickory and charcoal: building and holding a Texas-style fire in a small folding grill.", "Fire &amp; wood"),
- "bbq": ("texas-bbq-on-a-small-grill", "Texas BBQ on a Small Grill", "Brisket, sausage, ribs, beef and the Texas basics, adapted honestly to a lidless folding charcoal grill.", "BBQ"),
+ "fire": ("texas-fire-management", "Fire &amp; Wood", "Post oak, mesquite, hickory and charcoal: building and holding a Texas-style fire in a small flat pack grill.", "Fire &amp; wood"),
+ "bbq": ("texas-bbq-on-a-small-grill", "Texas BBQ on a Small Grill", "Brisket, sausage, ribs, beef and the Texas basics, adapted honestly to a lidless flat pack charcoal grill.", "BBQ"),
  "recipes": ("texas-recipes", "Texas Recipes", "Fajitas, links, chicken, breakfast tacos, venison and sides, written for a small charcoal grill.", "Recipes"),
- "trips": ("texas-trips", "Tailgates, Camp &amp; River", "Football tailgates, deer camp, lake and river weekends, Hill Country and coastal trips with a folding grill.", "Trips"),
+ "trips": ("texas-trips", "Tailgates, Camp &amp; River", "Football tailgates, deer camp, lake and river weekends, Hill Country and coastal trips with a flat pack grill.", "Trips"),
  "gear": ("gear-and-the-grill", "The Grill &amp; Gear", "The Slot Grill sizes, griddle plates, care for carbon steel, what to pack, and where it's made.", "The grill"),
- "about": ("about-texas-folding-grill", "About &amp; Reference", "About the site, the FAQ and a glossary of Texas BBQ terms.", "About"),
+ "about": ("about-texas-flat-pack-grill", "About &amp; Reference", "About the site, the FAQ and a glossary of Texas BBQ terms.", "About"),
 }
 NAV_CATS = ["fire", "bbq", "recipes", "trips", "gear"]
 FAVICON = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" fill="#2b1d16"/><path d="M32 8l6.5 15.5H55l-13.3 9.8 5 16.2L32 39.8 17.3 49.5l5-16.2L9 23.5h16.5z" fill="#b5462a"/><rect x="8" y="54" width="48" height="4" fill="#efe2c8"/></svg>'
@@ -182,6 +182,7 @@ def article(slug, title, desc, img, body, cat, faq):
     return shell(title, desc, slug, inner, img=IMG[img], faq=faq, trail=trail)
 def cardgrid(ps):
     return '<div class="grid">' + "".join('<a class="card" href="/%s.html"><img src="%s" alt="" loading="lazy"><div><h3>%s</h3><p>%s</p></div></a>' % (s, IMG[i], t, d) for s, t, d, i, *_ in ps) + "</div>"
+REDIRECTS = {"about-texas-folding-grill": "about-texas-flat-pack-grill", "beef-short-ribs-on-a-folding-grill": "beef-short-ribs-on-a-flat-pack-grill", "deer-camp-cooking-with-a-folding-grill": "deer-camp-cooking-with-a-flat-pack-grill", "hauling-a-folding-grill-in-a-truck-or-utv": "hauling-a-flat-pack-grill-in-a-truck-or-utv", "pork-spare-ribs-on-a-folding-grill": "pork-spare-ribs-on-a-flat-pack-grill", "texas-folding-grill-packing-list": "texas-flat-pack-grill-packing-list", "venison-backstrap-on-a-folding-grill": "venison-backstrap-on-a-flat-pack-grill"}
 def build():
     open("style.css", "w").write(CSS)
     open("favicon.svg", "w").write(FAVICON)
@@ -200,6 +201,8 @@ def build():
         ps = [p for p in PAGES if p[5] == k]
         trail = [("Home", "/"), (c[1], None)]
         open(c[0] + ".html", "w").write(shell(c[1] + " | " + SITE_NAME, c[2], c[0], crumbs(trail) + "<h1>%s</h1><p class=\"lede\">%s</p>" % (c[1], c[2]) + cardgrid(ps) + productbox(), kind="CollectionPage", trail=trail, wide=True))
+    for o, n in REDIRECTS.items():
+        open(o + ".html", "w").write('<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>Moved</title><link rel="canonical" href="%s/%s.html"><meta name="robots" content="noindex"><meta http-equiv="refresh" content="0; url=/%s.html"></head><body><p>This page moved to <a href="/%s.html">/%s.html</a>.</p></body></html>' % (DOMAIN, n, n, n, n))
     open("index.html", "w").write(shell(HOME_TITLE, HOME_DESC, "index", home_html(), img=IMG[HOME_IMG], wide=True))
     open("404.html", "w").write(shell("Page not found | " + SITE_NAME, "That page isn't here. Browse the guides instead.", "404",
         "<h1>That page isn't here</h1><p>The link may be old or mistyped. Try one of these:</p>" + ul(['<a href="/">Home</a>'] + ['<a href="/%s.html">%s</a>' % (c[0], c[1]) for c in CATS.values()] + ['<a href="/faq.html">FAQ</a>']), kind="WebPage"))
